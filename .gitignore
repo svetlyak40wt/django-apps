@@ -1,0 +1,5 @@
+*.pyc
+.*.swp
+django_apps.egg-info
+build
+dist
