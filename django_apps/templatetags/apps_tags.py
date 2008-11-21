@@ -1,7 +1,9 @@
 import re
 from django import template
 from django.conf import settings
-import pdb
+from django.utils.translation import ugettext_lazy as _
+
+from django_apps.descriptions import get_description
 
 register = template.Library()
 
@@ -13,12 +15,12 @@ class InstalledAppsNode(template.Node):
         def get_info(module_name):
             mod = __import__(module_name)
             version = getattr(mod, '__version__',
-                      getattr(mod, 'VERSION', ''))
+                      getattr(mod, 'VERSION', _('unknown')))
             if isinstance(version, (tuple, list)):
                 version = '.'.join(map(str, version))
             return dict(name = module_name,
                         version = version,
-                        description = '')
+                        description = get_description(module_name))
 
         try:
             context[self.var_name] = [get_info(mod) for mod in settings.INSTALLED_APPS]
@@ -39,3 +41,4 @@ def installed_apps(parser, token):
     return InstalledAppsNode(var_name)
 
 register.tag(installed_apps)
+
