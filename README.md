@@ -31,8 +31,5 @@ their versions and descriptions.
     {% endfor %}
     </table>
 
-You can find an example result at my own 'Installed Apps' page:
-<http://aartemenko.com/about/apps/>
-
 Please, note, that descriptions are hardcoded into the code of the `django_apps`.
 
